@@ -3,7 +3,7 @@ import numpy as np
 def main():
 
     #load training data
-    train_data = np.loadtxt("housing_train")
+    train_data = np.matrix(np.loadtxt("housing_train"))
 
     #load testing data
     test_data = np.matrix(np.loadtxt("housing_test"))
