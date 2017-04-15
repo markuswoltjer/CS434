@@ -9,12 +9,15 @@ class Lin_Reg(object):
         if (type(X) is not np.matrix) or (type(Y) is not np.matrix):
             raise ValueError("Data must be in form of numpy matrices")
 
-        self.w=(X.T*X + np.matrix(lamb*np.identity(len(X.T*X)))).I*(X.T*Y)
+        self.w=np.matrix((X.T*X + np.matrix(lamb*np.identity(len(X.T*X))))).I*(X.T*Y)
 
     def get_w(self):
+        """ Get weights used by linear regression object"""
         return self.w
 
     def get_sse(self,y,X):
-        return ((y - X*self.w).T * (y -X*self.w)).item(0)
+        """ Pass in target outputs and input features
+            Get Sum Square Error"""
+        return ((y - X*self.w).T * (y - X*self.w)).item(0)
 
 
