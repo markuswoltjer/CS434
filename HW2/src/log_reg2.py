@@ -27,6 +27,8 @@ class Log_Reg(object):
         self.w = np.zeros(len(X[0]))
         self.thresh = thresh
         self.iter = 0
+        self.norm = float("inf")
+        self.obj = float("inf")
         while not self.converge(con_key):
             d = np.zeros(len(X[0]))
             for i in range(len(Y)):
@@ -35,10 +37,17 @@ class Log_Reg(object):
                 d = d + error * X[i]
             self.w += lr * d
             self.iter += 1
-#        print('done')
+            self.obj_prev = self.obj
+            self.obj = L(Y, X, self.w)
+            self.obj_ch = abs(self.obj - self.obj_prev)
+            self.norm = np.linalg.norm(d)
+
+    #        print('done')
 
     def converge(self, key):
         return{
+            'objective': self.obj_ch <= self.thresh,
+            'gradient': self.norm <= self.thresh,
             'iteration': self.iter >= self.thresh
         }[key]
 
