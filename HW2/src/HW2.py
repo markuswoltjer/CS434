@@ -33,14 +33,24 @@ def main():
 #    print(log_reg.get_prob(X_test[300]))
 
     # 2
+    iterations = []
     test_acc = []
     train_acc = []
-    learn = 10**-9
+    learn = 10**-9  
     log_reg = lr.Log_Reg(add_dummy(X_train), Y_train, 'iteration', learn, 1)
-    for i in range(100):
+    for i in range(1, 101):
+        iterations.append(i)
         test_acc.append(lr.predict_accuracy(log_reg.w, add_dummy(X_test), Y_test))
         train_acc.append(lr.predict_accuracy(log_reg.w, add_dummy(X_train), Y_train))
         log_reg.another_batch(add_dummy(X_train), Y_train, learn)
+
+    #Plot
+    print("iterations")
+    print(iterations)
+    print("test_acc")
+    print(test_acc)
+    print("train_acc")
+    print(train_acc)
 
     # 3
     ''' The only change is the addition of the regularationzation
