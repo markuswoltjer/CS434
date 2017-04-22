@@ -22,7 +22,7 @@ def L(Y, X, w):
     return to_return
 
 
-def test_accuracy(w, X, Y):
+def predict_accuracy(w, X, Y):
     correct = 0
     for i in range(len(Y)):
         prediction = sigmoid(w,X[i])
@@ -49,9 +49,9 @@ class Log_Reg(object):
             self.obj_prev = self.obj
             self.obj = L(Y, X, self.w)
 #            print(self.obj)
-            self.accuracy = test_accuracy(self.w, X, Y)
+            self.accuracy = predict_accuracy(self.w, X, Y)
             self.obj_ch = abs(self.obj - self.obj_prev)
-            self.norm = np.linalg.norm(d)
+            self.norm = np.linalg.norm(-d)
 
     #        print('done')
 
@@ -78,6 +78,6 @@ class Log_Reg(object):
         self.obj_prev = self.obj
         self.obj = L(Y, X, self.w)
         #            print(self.obj)
-        self.accuracy = test_accuracy(self.w, X, Y)
+        self.accuracy = predict_accuracy(self.w, X, Y)
         self.obj_ch = abs(self.obj - self.obj_prev)
         self.norm = np.linalg.norm(d)
