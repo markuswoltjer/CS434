@@ -27,7 +27,7 @@ def main():
         log_reg = lr.Log_Reg(add_dummy(X_train), Y_train, 'objective', 10**-i, 10)
         print("learning rate = 10^-" + str(i))
         print("Accuracy (predictions on right side of 0.5): "
-              + str(lr.test_accuracy(log_reg.w, add_dummy(X_train), Y_train)))
+              + str(lr.predict_accuracy(log_reg.w, add_dummy(X_train), Y_train)))
         print("Loss for training: " + str(log_reg.obj))
 #    print (log_reg.w)
 #    print(log_reg.get_prob(X_test[300]))
@@ -38,8 +38,8 @@ def main():
     learn = 10**-9
     log_reg = lr.Log_Reg(add_dummy(X_train), Y_train, 'iteration', learn, 1)
     for i in range(100):
-        test_acc.append(lr.test_accuracy(log_reg.w, add_dummy(X_test), Y_test))
-        train_acc.append(lr.test_accuracy(log_reg.w, add_dummy(X_train), Y_train))
+        test_acc.append(lr.predict_accuracy(log_reg.w, add_dummy(X_test), Y_test))
+        train_acc.append(lr.predict_accuracy(log_reg.w, add_dummy(X_train), Y_train))
         log_reg.another_batch(add_dummy(X_train), Y_train, learn)
 
     # 3
@@ -70,8 +70,8 @@ def main():
     thresh = 100
     for lam in lams:
         log_reg = lr.Log_Reg(add_dummy(X_train), Y_train, 'iteration', learn, 50, lamb=lam)
-        test_acc.append(lr.test_accuracy(log_reg.w, add_dummy(X_test), Y_test))
-        train_acc.append(lr.test_accuracy(log_reg.w, add_dummy(X_train), Y_train))
+        test_acc.append(lr.predict_accuracy(log_reg.w, add_dummy(X_test), Y_test))
+        train_acc.append(lr.predict_accuracy(log_reg.w, add_dummy(X_train), Y_train))
 
 
 
