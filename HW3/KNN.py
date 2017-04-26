@@ -1,6 +1,7 @@
 import numpy as numpy
 from scipy import stats
 
+# Currently takes one test sample, assumes the first column as label
 class KNN(object):
     def __init__(train, test, k):
         normalize_distances(train, test)
@@ -12,7 +13,7 @@ class KNN(object):
 
     # Normalize ranges
     def normalize_distances(train, test):
-        for i in range(0, len(test)):
+        for i in range(1, len(test)):
             span = np.amax(train[:,i]) - np.amin(train[:,i])
             for j in range(0, len(train[:,i])):
                 train[j][i] = train[j][i] / span
@@ -22,7 +23,7 @@ class KNN(object):
     def calculate_distance(a, b):
         assert(len(a) == len(b))
         total = 0
-        for i in range(0, len(a)):
+        for i in range(1, len(a)):
             total += (a[i] - b[i])*(a[i] - b[i])
         return sqrt(total)
 
@@ -30,5 +31,5 @@ class KNN(object):
     def get_distances(train, test):
         distances = []
         for i in range(0, len(train)):
-            distances.append([calculate_distance(train[i], test), train[i][-1]])
+            distances.append([calculate_distance(train[i], test), train[i][1]])
         return distances
