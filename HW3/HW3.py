@@ -1,7 +1,8 @@
-import numpy as numpy
+import numpy as np
 import KNN as knn
+
 def csv_to_array(filename):
-    return = np.genfromtxt(filename, delimiter=",")
+    return np.genfromtxt(filename, delimiter=",")
 
 def main():
     # Load data
@@ -13,7 +14,7 @@ def main():
 
     predictions = []
     for i in range(0, len(test)):
-        myKNN = knn(train, test[i], k)
+        myKNN = knn.KNN(train, test[i], k)
         predictions.append(myKNN.prediction)
 
     print(predictions)
