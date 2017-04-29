@@ -21,6 +21,8 @@ def main():
 
     print(predictions)
 
+    tree = dt.DecTree(train, 6)
+    print(tree.search(test[0]))
 
 
 main()
