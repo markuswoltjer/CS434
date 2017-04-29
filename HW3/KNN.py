@@ -32,4 +32,4 @@ class KNN(object):
 
         # Predict input
         self.distances[self.distances[:,0].argsort()]
-        self.prediction = stats.mode(distances[0:k][1])
+        self.prediction = stats.mode(self.distances[0:k][1])
