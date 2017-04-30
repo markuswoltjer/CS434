@@ -72,12 +72,6 @@ def main():
     print("test error")
     print(test_error)
 
-    #make sure test and train data have not been modified
-    test2 = csv_to_array("knn_test.csv")
-    train2 = csv_to_array("knn_train.csv")
-    np.testing.assert_array_equal(test, test2,"test data has been modified")
-    np.testing.assert_array_equal(train, train2,"train data has been modified")
-
     # Re-load data for the decision tree
     test = csv_to_array("knn_test.csv")
     train = csv_to_array("knn_train.csv")
