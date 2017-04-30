@@ -54,12 +54,17 @@ def get_test_vals(data):
             best_gain = gain
             best_feat = feature
 
-    return best_thresh, best_feat
+    return best_thresh, best_feat, best_gain
 
+
+def same_class(data):
+    # Check if block of data all have identical classification
+    return len(np.unique(data[:,0])) == 1
 
 class DecTest(object):
+    # Object which contains the test
     def __init__(self, data):
-        self.thresh, self.feat = get_test_vals(data)
+        self.thresh, self.feat, self.gain = get_test_vals(data)
 
     def data_split(self, data):
         return data[data[:, self.feat] < self.thresh], data[data[:, self.feat] >= self.thresh]
@@ -69,6 +74,11 @@ class DecTest(object):
             return "left"
         else:
             return "right"
+
+    def test_info(self):
+        return "Test feature " + str(self.feat)\
+                + " against threshold " + str(self.thresh)\
+                + " for gain of " + str(self.gain)
 
 class DecTree(object):
     def __init__(self, data, depth):
@@ -84,16 +94,20 @@ class DecTree(object):
             self.left = (data_left[:,0] == 1).sum() / len(data_left)
             self.right = (data_right[:,0] == 1).sum() / len(data_right)
         else:
-            if data_left.size == len(data[0]):
+            if data_left.size == len(data[0])\
+                    or same_class(data_left):
                 self.left = 1. if data_left[0,0] == 1 else 0.
             else:
                 self.left = DecTree(data_left, depth - 1)
-            if data_right.size == len(data[0]):
+            if data_right.size == len(data[0])\
+                    or same_class(data_right):
                 self.right = 1. if data_right[0,0] == 1 else 0.
             else:
                 self.right = DecTree(data_right, depth - 1)
 
     def search(self, case):
+        # Perform Binary search until leaf node reached
+        # Return leaf node up recursion stack
         if self.test.get_direction(case) == "left":
             if isinstance(self.left, numbers.Real):
                 return self.left
@@ -104,3 +118,35 @@ class DecTree(object):
                 return self.right
             else:
                 return self.right.search(case)
+
+    def print_tree(self, depth = 0):
+        # Prints visual representation of tree
+        # Similiar to one from slide in calss
+        prepend = depth * "| "
+        print(prepend +\
+              "Feature " + str(self.test.feat) +\
+              " < " + str(self.test.thresh) +\
+              " (gain = " + str(round(self.test.gain, 2)) + ")")
+        if isinstance(self.left, numbers.Real):
+            print(prepend + "| P(y = 1) = " + str(self.left))
+        else:
+            self.left.print_tree(depth = depth + 1)
+        print(prepend +\
+              "Feature " + str(self.test.feat) +\
+              " >= " + str(self.test.thresh) +\
+              " (gain = " + str(round(self.test.gain, 2)) + ")")
+
+        if isinstance(self.right, numbers.Real):
+            print(prepend + "| P(y = 1) = " + str(self.right))
+        else:
+            self.right.print_tree(depth = depth + 1)
+
+    def get_error(self, test_cases):
+        incorrect = 0
+        for i in range(len(test_cases)):
+            prediction = self.search(test_cases[i])
+            if (prediction > 0.5 and test_cases[i,0] < 0)\
+                or (prediction < 0.5 and test_cases[i,0] > 0):
+                incorrect += 1
+
+        return incorrect / len(test_cases)
