@@ -32,7 +32,7 @@ def get_test_error(train, test, k):
     return num_errors
 
 def main():
-
+    # test VCS commit
     # Load data
     test = csv_to_array("knn_test.csv")
     train = csv_to_array("knn_train.csv")
