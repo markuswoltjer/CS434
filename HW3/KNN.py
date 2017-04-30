@@ -3,12 +3,13 @@ import numpy as np
 # Normalize ranges
 def normalize_distances(train):
     scalars = []
+    train_n = np.empty((len(train), len(train[0])))
     for i in range(1, len(train[0])):
         feature_max = np.amax(train[:,i])
         for j in range(0, len(train[:,i])):
-            train[j][i] = train[j][i] / feature_max
+            train_n[j][i] = train[j][i] / feature_max
         scalars.append(feature_max)
-    return (train, scalars)
+    return (train_n, scalars)
 
 # Define distance function
 def calculate_distance(a, b):

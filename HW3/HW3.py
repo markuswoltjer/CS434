@@ -13,6 +13,24 @@ def get_error(predictions, actual):
             incorrect += 1
     return incorrect/len(predictions)
 
+def get_training_error(train, k):
+    myKNN = knn.KNN(train)
+    num_errors = 0
+    for i in range(0, len(train)):
+        a = myKNN.predict(train[i], k)
+        b = train[i][0]
+        if(myKNN.predict(train[i], k) != train[i][0]):
+            num_errors += 1
+    return num_errors
+
+def get_test_error(train, test, k):
+    myKNN = knn.KNN(train)
+    num_errors = 0
+    for i in range(0, len(test)):
+        if(myKNN.predict(test[i], k) != test[i][0]):
+            num_errors += 1
+    return num_errors
+
 def main():
 
     # Load data
@@ -35,7 +53,25 @@ def main():
     # Pro'ly issue w/ algorithm itself, not our code
     print("Error rate: " + str(get_error(knn_predictions, test[:,0])))
 
-    # KNN modifies the data,
+    training_error = []
+    leave_one_out_error = []
+    test_error = []
+
+    for k in range(1, 2, 2):#52
+        # Training error as number of mistakes
+        training_error.append(get_training_error(train, k))
+        # Leave-one-out training error
+        # leave_one_out_error.append(get_leave_one_error(train, k))
+        # Test error
+        test_error.append(get_test_error(train, test, k))
+
+    # Plot
+    print("training error")
+    print(training_error)
+
+    print("test error")
+    print(test_error)
+
     # Re-load data for the decision tree
     test = csv_to_array("knn_test.csv")
     train = csv_to_array("knn_train.csv")
