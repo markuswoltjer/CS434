@@ -4,6 +4,7 @@ import numbers
 
 
 def get_entropy(data):
+    # Get entropy of set of data's classifications
     p_pos = (data[:,0] == 1).sum() / len(data)
     p_neg = (data[:,0] == -1).sum() / len(data)
     if p_pos == 0 or p_neg == 0:
@@ -14,6 +15,8 @@ def get_entropy(data):
 
 
 def get_info_gain(thresh, data):
+    # Get info gain associated w/ applying threshold
+    # on given data
     data_left = data[data[:,1] < thresh]
     data_right = data[data[:,1] >= thresh]
     p_left = len(data_left) / len(data)
@@ -142,11 +145,13 @@ class DecTree(object):
             self.right.print_tree(depth = depth + 1)
 
     def get_error(self, test_cases):
+        # Given test cases (features and classifications
+        # Gives fraction of test cases which the tree
+        # misclassified
         incorrect = 0
         for i in range(len(test_cases)):
             prediction = self.search(test_cases[i])
             if (prediction > 0.5 and test_cases[i,0] < 0)\
                 or (prediction < 0.5 and test_cases[i,0] > 0):
                 incorrect += 1
-
         return incorrect / len(test_cases)
