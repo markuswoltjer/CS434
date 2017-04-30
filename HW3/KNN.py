@@ -38,9 +38,14 @@ class KNN(object):
         for i in range(0, len(input_vector)-1):
             scaled_input[i] = input_vector[i+1] / self.scalars[i]
         self.unsorted_distances = get_distances(self.train_n, scaled_input)
+        print("unsorted")
+        print(self.unsorted_distances)
 
         # Top K nearest distances with predictions
         self.sorted_distances = sorted(self.unsorted_distances, key=lambda tup: tup[0])[0:k]
+
+        print("sorted")
+        print(self.sorted_distances)
 
         # Alternative quick mode, specific to labels -1 and 1 (stats.mode would operate better on differently structured arrays)
         my_sum = 0
