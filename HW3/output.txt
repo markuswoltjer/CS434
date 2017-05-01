@@ -1,0 +1,59 @@
+KNN predictions
+[1, 1, 1, -1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, 1, -1, 1, 1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, -1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1]
+Error rate: 0.3873239436619718
+training error
+[122]
+test error
+[120]
+Part II
+
+NB: use python3 interpreter to work properly
+/home/sam/PycharmProjects/CS434c/HW3/DecTree.py:8: RuntimeWarning: invalid value encountered in long_scalars
+  p_pos = (data[:,0] == 1).sum() / len(data)
+/home/sam/PycharmProjects/CS434c/HW3/DecTree.py:9: RuntimeWarning: invalid value encountered in long_scalars
+  p_neg = (data[:,0] == -1).sum() / len(data)
+Problem 1: 
+
+Feature 23 < 115.0 (gain = 0.64)
+| P(y = 1) = 0.085
+Feature 23 >= 115.0 (gain = 0.64)
+| P(y = 1) = 1.0
+
+Error rate for training data = 0.05985915492957746
+Error rate for test data = 0.1056338028169014
+
+Problem 2:
+(NB: Some paths exhaust data splits before final depth)
+
+Feature 23 < 115.0 (gain = 0.64)
+| Feature 28 < 0.111 (gain = 0.19)
+| | Feature 22 < 33.105 (gain = 0.02)
+| | | P(y = 1) = 0.0
+| | Feature 22 >= 33.105 (gain = 0.02)
+| | | Feature 2 < 23.2 (gain = 0.35)
+| | | | P(y = 1) = 1.0
+| | | Feature 2 >= 23.2 (gain = 0.35)
+| | | | P(y = 1) = 0.0
+| Feature 28 >= 0.111 (gain = 0.19)
+| | Feature 2 < 19.71 (gain = 0.25)
+| | | Feature 30 < 0.103 (gain = 0.37)
+| | | | P(y = 1) = 0.0
+| | | Feature 30 >= 0.103 (gain = 0.37)
+| | | | Feature 2 < 17.13 (gain = 0.99)
+| | | | | P(y = 1) = 1.0
+| | | | Feature 2 >= 17.13 (gain = 0.99)
+| | | | | P(y = 1) = 0.0
+| | Feature 2 >= 19.71 (gain = 0.25)
+| | | Feature 5 < 0.090185 (gain = 0.47)
+| | | | Feature 10 < 0.05803 (gain = 0.92)
+| | | | | P(y = 1) = 1.0
+| | | | Feature 10 >= 0.05803 (gain = 0.92)
+| | | | | P(y = 1) = 0.0
+| | | Feature 5 >= 0.090185 (gain = 0.47)
+| | | | P(y = 1) = 1.0
+Feature 23 >= 115.0 (gain = 0.64)
+| P(y = 1) = 1.0
+
+Error rate for training data = 0.0
+Error rate for test data = 0.08098591549295775
+
