@@ -40,18 +40,18 @@ def main():
     # Part I
 
     # Set k
-    k = 5
-
-    knn_predictions = []
-    myKNN = knn.KNN(train)
-    for i in range(0, len(test)):
-        knn_predictions.append(myKNN.predict(test[i], k))
-    print("KNN predictions")
-    print(knn_predictions)
-    # Added in print error rate
-    # Pretty high error rate, BUT < 0.5 so something is working
-    # Pro'ly issue w/ algorithm itself, not our code
-    print("Error rate: " + str(get_error(knn_predictions, test[:,0])))
+    # k = 5
+    #
+    # knn_predictions = []
+    # myKNN = knn.KNN(train)
+    # for i in range(0, len(test)):
+    #     knn_predictions.append(myKNN.predict(test[i], k))
+    # print("KNN predictions")
+    # print(knn_predictions)
+    # # Added in print error rate
+    # # Pretty high error rate, BUT < 0.5 so something is working
+    # # Pro'ly issue w/ algorithm itself, not our code
+    # print("Error rate: " + str(get_error(knn_predictions, test[:,0])))
 
     training_error = []
     leave_one_out_error = []

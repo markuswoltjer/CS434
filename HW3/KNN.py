@@ -23,8 +23,9 @@ def calculate_distance(a, b):
 def get_distances(train_n, one_test_vector):
     distances = []
     for i in range(0, len(train_n)):
+        if(np.array_equal(train_n[i],one_test_vector)):
+            print("test vector matches training vector " + str(i) + " distance between is " + str(calculate_distance(train_n[i], one_test_vector)))
         single_distance = [calculate_distance(train_n[i], one_test_vector)]
-        a = train_n[i][0]
         single_distance.append(train_n[i][0])
         distances.append(single_distance)
     return distances
@@ -35,14 +36,16 @@ class KNN(object):
         (self.train_n, self.scalars) = normalize_distances(train)
 
     def predict(self, input_vector, k):
-        scaled_input = np.empty(len(input_vector))
+        self.scaled_input = np.empty(len(input_vector))
         for i in range(0, len(input_vector)-1):
-            scaled_input[i] = input_vector[i+1] / self.scalars[i]
-        self.unsorted_distances = get_distances(self.train_n, scaled_input)
-
+            self.scaled_input[i] = input_vector[i+1] / self.scalars[i]
+        self.unsorted_distances = get_distances(self.train_n, self.scaled_input)
+        print("unsorted")
+        print(self.unsorted_distances)
         # Top K nearest distances with predictions
         self.sorted_distances = sorted(self.unsorted_distances, key=lambda tup: tup[0])[0:k]
-
+        print("sorted")
+        print(self.sorted_distances)
         # Alternative quick mode, specific to labels -1 and 1 (stats.mode would operate better on differently structured arrays)
         my_sum = 0
         for j in range(0, k):
