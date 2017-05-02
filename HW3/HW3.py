@@ -1,7 +1,16 @@
+# Use instructions:
+# All the submitted files should be housed in the same directory
+# Part two requires python 3
+# The standard scipy, numpy, and matplotlib libraries are needed, which in linux can be installed with sudo apt-get install python-numpy python-scipy python-matplotlib
+# Some of our teammates had trouble with the pylab library in python3. The workaround is to first run with python 2 to get the plot for the KNN, and then run with python3
+# the decision tree to work.
+# If any of the above are giving you trouble, please email me (Markus), since I check my email frequently.
+
 import numpy as np
 import KNN as knn
 import DecTree as dt
 import pylab as pl
+import hybrid as hb
 
 def csv_to_array(filename):
     return np.genfromtxt(filename, delimiter=",")
@@ -46,7 +55,7 @@ def main():
 
     # Part I
 
-    #Set k
+    # Set k (5 chosen just for demonstration, feel free to modify)
     k = 5
     
     knn_predictions = []
@@ -82,9 +91,9 @@ def main():
     print(test_error)
 
     # Plot
-    pl.plot(range(1, 52, 2), training_error, 'r--', label='Train Error')
-    pl.plot(range(1, 52, 2), leave_one_out_error, 'g--', label='Leave-One-Out Error')
-    pl.plot(range(1, 52, 2), test_error, 'b--', label = 'Test Error')
+    pl.plot(range(1, 52, 2), training_error, 'r-', label='Train Error')
+    pl.plot(range(1, 52, 2), leave_one_out_error, 'g-', label='Leave-One-Out Error')
+    pl.plot(range(1, 52, 2), test_error, 'b-', label = 'Test Error')
 
     pl.title('KNN Performance Dependent on K')
     pl.ylabel('K')
@@ -113,5 +122,19 @@ def main():
     tree.print_tree()
     print("\nError rate for training data = " + str(tree.get_error(train)))
     print("Error rate for test data = " + str(tree.get_error(test)) + "\n")
+
+    # Extra Credit
+    # The plan is similar to SVM, which draws a barrier between classes
+    # based on the relevant (near) points to the barrier. In this case,
+    # we are going to only consider the K nearest points to a test input
+    # and instead of just having them vote, they will be used as the
+    # training set for a decision tree.
+
+    #myHybrid = hb.hybrid(train, test[0], 30, 3)
+    #print(myHybrid.get_error(test[0]))
+
+    #The EC implementation is a little buggy but the idea is there, and it's logically laid out in hybrid.py
+
+
 
 main()
