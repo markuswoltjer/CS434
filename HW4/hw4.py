@@ -1,18 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 import km
+import hac
 
-
-
-    
-
-
-def main(): 
-#1, implement K-means algorithm with k = 2, plot the objective (SSE) as a function of iterations.
-#Present results of a typical run.
-
+def partOne():
     print("Generating object")
     kTwo = km.kmean("data.txt", 2)
 
@@ -29,8 +21,7 @@ def main():
     plt.show()
 
 
-#2, Apply this implementation with different values of k {3..10} For each k, please run the alg. 10 times.
-
+def partTwo():
     kOBJ = km.kmean("data-2.txt", 0)
     bestSSE = np.full(11, np.inf);
 
@@ -46,6 +37,29 @@ def main():
     plt.ylabel("Best SSE over 10 iter")
     plt.xlabel("k value")
     plt.show()
+
+
+    
+
+
+def main(): 
+#1, implement K-means algorithm with k = 2, plot the objective (SSE) as a function of iterations.
+#Present results of a typical run.
+
+    #partOne()
+
+#2, Apply this implementation with different values of k {3..10} For each k, please run the alg. 10 times.
+
+    #partTwo()
+
+#3 Single linked HAC
+
+    hacker = hac.HAC("data-2.txt")
+    hacker.completeLink()
+    for x in hacker.clusters:
+        print(x)
+
+#4  Full linked HAC
 
 main();
 #Each row in the data set is a 28x28 pixel representation of a digit
