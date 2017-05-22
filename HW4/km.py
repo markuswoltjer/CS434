@@ -13,7 +13,7 @@ class kmean:
         self.means = [self.data[x] for x in random.sample(range(0, len(self.data)), k) ]
 
         self.iterations = 0
-        self.SSE = float("inf")
+        self.SSE = 0
 
     #changes state, no return value
     def iterate(self):
@@ -30,7 +30,8 @@ class kmean:
 
             #for each mean
             for mean in range(0, self.k):
-                dist = sum( [ (x - y)**2 for x,y in zip( self.means[mean], self.data[entry] ) ] )**.5
+                error = sum( [ (x - y)**2 for x,y in zip( self.means[mean], self.data[entry] ) ] )
+                dist = error**.5
                 if(dist < best[1]):
                     best = (mean, dist)
 
@@ -39,7 +40,7 @@ class kmean:
             #count elements for average to assign next mean
             nextSize[best[0]] += 1
 
-            self.SSE += dist
+            self.SSE += error
 
         #reassign means using aggregate new means and count of points
         self.means = [ [ x / y for x in m] for m,y in zip(nextMean, nextSize)]
@@ -59,5 +60,8 @@ class kmean:
 
         return iterSSE
 
-
-
+    #this way we don't have to reload data from txt file
+    def reset(self, newK):
+        self.k = newK
+        self.means = [self.data[x] for x in random.sample(range(0, len(self.data)), newK) ]
+        self.iterations = 0
