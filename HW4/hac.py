@@ -20,25 +20,6 @@ class HAC:
                 self.distMat[y][x] = self.distMat[x][y] #make life easier on me
 
 #x and y are indexes in the self.cluster array
-    def singleLinkDist(self, x, y):
-        #closest = (-1, -1, float('inf'))
-        closest = float('inf')
-        for a in self.clusters[x]:
-            for b in self.clusters[y]:
-                if self.distMat[a][b] < closest:
-                    #closest = (a, b, self.distMat[a][b])
-                    closest = self.distMat[a][b]
-
-        return closest
-
-    def completeLinkDist(self, x, y):
-        completeDist = 0
-        for a in self.clusters[x]:
-            for b in self.clusters[y]:
-                completeDist += self.distMat[a][b]
-
-        return completeDist
-
     def linkDist(self, method, x, y):
         ops = {'single': op.lt,
                'complete': op.gt}
@@ -56,7 +37,10 @@ class HAC:
     def link(self, k, method):
         while len(self.clusters) > k:
             minGroups = (-1, -1, float('inf'))
-
+            # mingroup is:
+            # index of cluster a, index of cluster b, dist btw the two
+            # my understanding of it
+            # -Sam
             #find nearest clusters
             for x in range(0, len(self.clusters)):
                 for y in range(x+1, len(self.clusters)):
