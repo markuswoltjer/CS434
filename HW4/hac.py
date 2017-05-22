@@ -34,7 +34,7 @@ class HAC:
         return dist
 
 
-    def link(self, k, method):
+    def link(self, k, method, dendo):
         while len(self.clusters) > k:
             minGroups = (-1, -1, float('inf'))
             # mingroup is:
@@ -47,21 +47,23 @@ class HAC:
                     tmp = self.linkDist(method, x, y)
                     if(tmp < minGroups[2]):
                         minGroups = (x, y, tmp)
-
             #merge clusters
             self.clusters[minGroups[0]] += self.clusters[minGroups[1]]
             self.clusters.remove(self.clusters[minGroups[1]])
+            if dendo:
+                # record minGroups[2], ie dist of mrgd clusters
+                pass
             #print(minGroups);
 
         return;
 
 
     def singleLink(self):
-        self.link(10, 'single')
+        self.link(10, 'single', False)
         return;
 
     def completeLink(self):
-        self.link(10, 'complete')
+        self.link(10, 'complete', False)
         return;
 
 

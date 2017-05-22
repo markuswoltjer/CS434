@@ -58,6 +58,7 @@ def main():
     hacker.completeLink()
     for x in hacker.clusters:
         print(x)
+    hacker.link(1,'complete', False)
 
 #4  Full linked HAC
 
