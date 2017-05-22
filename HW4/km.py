@@ -36,24 +36,15 @@ class kmean:
 
             #factor this entry into it's respective mean
             nextMean[best[0]] = [x + y for x,y in zip( nextMean[best[0]],  self.data[entry]) ]
+            #count elements for average to assign next mean
             nextSize[best[0]] += 1
 
             self.SSE += dist
 
-        #reassign means using aggregate means and count of points
+        #reassign means using aggregate new means and count of points
         self.means = [ [ x / y for x in m] for m,y in zip(nextMean, nextSize)]
         self.iterations += 1
         return 0
-
-    #this funciton probably shouldn't exist
-    def iterateN(self, n):
-        iterSSE = []
-        for x in range(0, n):
-            self.iterate()
-            iterSSE += [self.SSE]
-
-        return iterSSE;
-
 
     def iterSolve(self):
         iterSSE = []
