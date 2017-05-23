@@ -46,19 +46,19 @@ def main():
 #1, implement K-means algorithm with k = 2, plot the objective (SSE) as a function of iterations.
 #Present results of a typical run.
 
-    #partOne()
+    partOne()
 
 #2, Apply this implementation with different values of k {3..10} For each k, please run the alg. 10 times.
 
-    #partTwo()
+    partTwo()
 
 #3 Single linked HAC
 
-    hacker = hac.HAC("data-2.txt")
-    hacker.completeLink()
-    for x in hacker.clusters:
-        print(x)
-    hacker.link(1,'complete', False)
+#    hacker = hac.HAC("data-2.txt")
+#    hacker.completeLink()
+#    for x in hacker.clusters:
+#        print(x)
+#    hacker.link(1,'complete', False)
 
 #4  Full linked HAC
 
