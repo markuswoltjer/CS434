@@ -12,7 +12,6 @@ class HAC:
         self.constructDistMat()
         #clusters exist as idxs for self.data
         self.clusters = [ [x] for x in   list(range(0, len(self.data)))]
-#        print(self.clusters)
 
     def constructDistMat(self):
         #memoize all possible N^2 connections in the complete graph
@@ -68,6 +67,7 @@ class HAC:
             #merge clusters
             if dendo:
                 self.tab_merge(minGroups)
+                print(minGroups)
             self.clusters[minGroups[0]] += self.clusters[minGroups[1]]
             self.clusters.remove(self.clusters[minGroups[1]])
             #print(minGroups);
