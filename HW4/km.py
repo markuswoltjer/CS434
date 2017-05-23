@@ -18,7 +18,7 @@ class kmean:
     #changes state, no return value
     def iterate(self):
         #new means, init to 0
-        nextMean = np.zeros((len(self.means), 784))
+        nextMean = np.zeros((self.k, 784))
         nextSize = np.zeros(len(self.means))
         self.SSE = 0
 
@@ -31,16 +31,16 @@ class kmean:
             #for each mean
             for mean in range(0, self.k):
                 error = sum( [ (x - y)**2 for x,y in zip( self.means[mean], self.data[entry] ) ] )
-                dist = error**.5
-                if(dist < best[1]):
-                    best = (mean, dist)
+                
+                if(error < best[1]):
+                    best = (mean, error)
 
             #factor this entry into it's respective mean
             nextMean[best[0]] = [x + y for x,y in zip( nextMean[best[0]],  self.data[entry]) ]
             #count elements for average to assign next mean
             nextSize[best[0]] += 1
 
-            self.SSE += error
+            self.SSE += best[1]
 
         #reassign means using aggregate new means and count of points
         self.means = [ [ x / y for x in m] for m,y in zip(nextMean, nextSize)]
