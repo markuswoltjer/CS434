@@ -58,7 +58,9 @@ def main():
     hacker.completeLink()
     for x in hacker.clusters:
         print(x)
-    hacker.link(1,'complete', False)
+    hacker.link(1,'complete', True)
+    print(hacker.ctab)
+    hacker.draw_dendo()
 
 #4  Full linked HAC
 

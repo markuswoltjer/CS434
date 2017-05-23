@@ -1,6 +1,10 @@
 
 import numpy as np
 import operator as op
+import copy
+from scipy.cluster import hierarchy
+import matplotlib.pyplot as plt
+
 
 class HAC:
     def __init__(self, filename):
@@ -33,8 +37,22 @@ class HAC:
 
         return dist
 
+    def tab_merge(self, clst):
+        # Add newly formed cluster to static list of clusters
+        self.oclust.append(self.clusters[clst[0]] + self.clusters[clst[1]])
+        nr = []
+        nr.append(self.oclust.index(self.clusters[clst[0]]))
+        nr.append(self.oclust.index(self.clusters[clst[1]]))
+        if nr[0] > nr[1]:
+           nr[0], nr[1] = nr[1], nr[0]
+        nr.append(clst[2])
+        nr.append(len(self.clusters[clst[0]]) + len(self.clusters[clst[1]]))
+        self.ctab.append(nr)
 
     def link(self, k, method, dendo):
+        if dendo:
+            self.oclust = copy.deepcopy(self.clusters)
+            self.ctab = []
         while len(self.clusters) > k:
             minGroups = (-1, -1, float('inf'))
             # mingroup is:
@@ -48,13 +66,11 @@ class HAC:
                     if(tmp < minGroups[2]):
                         minGroups = (x, y, tmp)
             #merge clusters
+            if dendo:
+                self.tab_merge(minGroups)
             self.clusters[minGroups[0]] += self.clusters[minGroups[1]]
             self.clusters.remove(self.clusters[minGroups[1]])
-            if dendo:
-                # record minGroups[2], ie dist of mrgd clusters
-                pass
             #print(minGroups);
-
         return;
 
 
@@ -66,6 +82,10 @@ class HAC:
         self.link(10, 'complete', False)
         return;
 
+    def draw_dendo(self):
+        plt.figure()
+        dn = hierarchy.dendrogram(self.ctab, color_threshold=0.)
+        plt.show()
 
 
 
