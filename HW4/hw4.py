@@ -50,6 +50,7 @@ def main():
     partTwo()
 
 #3 Single linked HAC
+    print("Single Link HAC")
     hacker = hac.HAC("data-2.txt")
     hacker.singleLink()
     hacker.link(1,'single', True)
@@ -57,6 +58,7 @@ def main():
 
 
 #4  Full linked HAC
+    print("Complete Link HAC")
     hacker = hac.HAC("data-2.txt")
     hacker.completeLink()
     hacker.link(1,'complete', True)
