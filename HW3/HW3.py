@@ -9,7 +9,7 @@
 import numpy as np
 import KNN as knn
 import DecTree as dt
-import pylab as pl
+#import pylab as pl
 import hybrid as hb
 
 def csv_to_array(filename):
@@ -89,18 +89,6 @@ def main():
 
     print("test error")
     print(test_error)
-
-    # Plot
-    pl.plot(range(1, 52, 2), training_error, 'r-', label='Train Error')
-    pl.plot(range(1, 52, 2), leave_one_out_error, 'g-', label='Leave-One-Out Error')
-    pl.plot(range(1, 52, 2), test_error, 'b-', label = 'Test Error')
-
-    pl.title('KNN Performance Dependent on K')
-    pl.ylabel('K')
-    pl.xlabel('Total Incorrect Predictions')
-    pl.legend(loc='upper left')
-
-    pl.show()
 
     # Re-load data for the decision tree
     test = csv_to_array("knn_test.csv")
