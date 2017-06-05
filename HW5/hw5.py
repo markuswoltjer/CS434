@@ -60,18 +60,11 @@ def getMark(numStates, numActions, fd):
     m = Markov(states, rewards)
     return m
 
-'''
-    for i in range(0, numStates):
-        stateProb = [ x[i] for x in tmp ]
-        states.append( state( stateProb, rewards[i], i)) 
-'''
-
 #unicode characters <3
 def δ(beta):
     epsilon = 10**-10
     numerator = epsilon*((1-beta)**2)
     denominator = 2 * (beta**2)
-
     return numerator / denominator
 
 
@@ -86,7 +79,7 @@ def main():
 
     markov = getMark(statCnt,actCnt, f)
     markov.Bellman( β, delta)
-
+    markov.displayOutput()
 
     f.close()
     return;

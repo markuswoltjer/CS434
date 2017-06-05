@@ -27,6 +27,22 @@ class Markov:
                     maxDelt = abs(delta)
             utility = copy.deepcopy(uTmp)
 
+        self.trueUtil = utility
+        self.optPath()
+
+    def optPath(self):
+        policy = [None] * len(self.trueUtil)
+        for i in range(0, len(self.trueUtil)):
+            actionUtility = [ sum([x*y for x,y in zip(self.trueUtil, act)]) for act in self.states[i]]
+            policy[i] = actionUtility.index(max(actionUtility))
+
+        self.policy = policy
+
+    def displayOutput(self):
+        print(self.trueUtil)
+        print(self.policy)
+
+
 
 
 
