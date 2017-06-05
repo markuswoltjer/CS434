@@ -6,7 +6,7 @@
 import sys
 import os.path
 import numpy as np
-from state import *
+from markov import *
 # Build a planner. Value iteration algorithm
 
 #input - MDP and factor discount B, output optimal utility function and policyP for mdp 
@@ -51,17 +51,22 @@ def getMark(numStates, numActions, fd):
     fd.readline()
     rewards = [float(x) for x in fd.readline().rstrip('\n').rsplit('   ')]
     
+    #swizzel
     states = []
+    for i in range(0, numStates):
+        stateProb = [ x[i] for x in tmp ]
+        states.append( stateProb)
 
-    m = Markov(tmp, rewards)
+
+    m = Markov(states, rewards)
     return m
 
 '''
     for i in range(0, numStates):
         stateProb = [ x[i] for x in tmp ]
-        #print(stateProb, '\n')
         states.append( state( stateProb, rewards[i], i)) 
 '''
+
 #unicode characters <3
 def δ(beta):
     epsilon = 10**-10
@@ -75,14 +80,16 @@ def δ(beta):
 def main():
     cmdArgs()
     β = float(sys.argv[2])
+    delta = δ(β)
 
     f = open(sys.argv[1], 'r')
     (statCnt, actCnt) = [ int(x) for x in f.readline().rstrip('\n').rsplit(' ') ]
-    
+
     markov = getMark(statCnt,actCnt, f)
+    markov.Bellman( β, delta)
 
-    delta = δ(β)
 
+    f.close()
     return;
 
 
