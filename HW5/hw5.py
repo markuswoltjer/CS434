@@ -36,12 +36,9 @@ def cmdArgs():
             exit()
         return;
 
-
-
-
 #assumes input file is filled with action by state tables for each state
 #readlines probably better than readline() for refactor
-def getStates(numStates, numActions, fd):
+def getMark(numStates, numActions, fd):
     
     tmp = []
     for x in range(0, numActions):
@@ -50,28 +47,42 @@ def getStates(numStates, numActions, fd):
         for y in range(0, numStates):
             tmp[x].append([ float(val) for val in fd.readline().rstrip('\n').rsplit('   ')])
             #Note: THIS ACCEPTS ONLY *THREE SPACES* DELIMITER. 
-    #print(tmp)
     #list is currently [action0 [state0 ... stateN] , ... , actionN [state0 ... stateN] ]
     fd.readline()
     rewards = [float(x) for x in fd.readline().rstrip('\n').rsplit('   ')]
     
     states = []
+
+    m = Markov(tmp, rewards)
+    return m
+
+'''
     for i in range(0, numStates):
         stateProb = [ x[i] for x in tmp ]
         #print(stateProb, '\n')
         states.append( state( stateProb, rewards[i], i)) 
+'''
+#unicode characters <3
+def δ(beta):
+    epsilon = 10**-10
+    numerator = epsilon*((1-beta)**2)
+    denominator = 2 * (beta**2)
 
-    return states
+    return numerator / denominator
+
+
 
 def main():
     cmdArgs()
+    β = float(sys.argv[2])
+
     f = open(sys.argv[1], 'r')
-    
     (statCnt, actCnt) = [ int(x) for x in f.readline().rstrip('\n').rsplit(' ') ]
     
     markov = getMark(statCnt,actCnt, f)
 
-    
+    delta = δ(β)
+
     return;
 
 
