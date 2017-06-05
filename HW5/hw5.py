@@ -50,7 +50,6 @@ def getMark(numStates, numActions, fd):
     #list is currently [action0 [state0 ... stateN] , ... , actionN [state0 ... stateN] ]
     fd.readline()
     rewards = [float(x) for x in fd.readline().rstrip('\n').rsplit('   ')]
-    
     #swizzel
     states = []
     for i in range(0, numStates):
